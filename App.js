@@ -1,46 +1,39 @@
-import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, View, TextInput } from 'react-native'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState('');
-  const [goals, setGoals] = useState([]);
-  const goalInputHandler = enteredText => {
-    setEnteredGoal(enteredText);
-  }
 
-  const addGoalHandler = () => {
-    setGoals(currentGoals => [
-      ...currentGoals,
-      enteredGoal
-    ]);
-  }
+  const [atom, setAtom] = useState()
+  const [connect, setConnect] = useState()
 
+  const getProtein = async () => {
+    const res = await axios.get('https://files.rcsb.org/ligands/view/011_ideal.pdb')
+    let data = res.data
+    data = data.split('\n')
+
+    let atoms = data.filter((line) => line.includes('ATOM'))
+    for (let i = 0; i < atoms.length; i++) {
+      atoms[i] = atoms[i].split(' ')
+      atoms[i] = atoms[i].filter((item) => item !== 'ATOM')
+      atoms[i] = atoms[i].filter((item) => item !== '')
+    }
+    setAtom(atoms)
+    let connects = data.filter((line) => line.includes('CONECT'))
+    for (let i = 0; i < connects.length; i++) {
+      connects[i] = connects[i].split(' ')
+      connects[i] = connects[i].filter((item) => item !== 'CONECT')
+      connects[i] = connects[i].filter((item) => item !== '')
+    }
+    setConnect(connects)
+  }
+  useEffect(() => {
+    getProtein()
+  }, [])
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer} >
-        <TextInput 
-          style={styles.input}
-          placeholder="your course goals" 
-          onChangeText={goalInputHandler}  ></TextInput>
-        <Button title="Add goal" onPress={ addGoalHandler } />
-      </View>
-      <View style={styles.goalsContainer} >
-        {/* <ScrollView>
-          {
-            goals.map((goal) => {
-              return <Text style={styles.goalsItem} key={goal}>{goal}</Text>
-            })
-          }
-        </ScrollView> */}
-        <FlatList
-          data={goals}
-          renderItem={itemData => (
-            <View>
-              <Text style={styles.goalsItem}>{itemData.item}</Text>
-            </View>
-          )}
-        />
-      </View>
+      <TextInput>Swifty protein</TextInput>
     </View>
   );
 }
@@ -48,38 +41,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
-    paddingHorizontal: 16,
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    paddingTop: 60,
     alignItems: 'center',
-    // paddingButtom: 24,
-    marginBottom:10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    width: '70%',
-    marginRight: 10,
-    padding: 10,
-    height: 40,
-    borderRadius: 10,
-  },
-  goalsContainer: {
-    flex: 5,
-  },
-  goalsItem: {
-    padding: 10,
-    backgroundColor: '#5e0acc',
-    borderColor: '#ccc',
-    color: 'white',
-    borderWidth: 1,
-    marginBottom: 10,
-    borderRadius: 10,
-  }
 });
