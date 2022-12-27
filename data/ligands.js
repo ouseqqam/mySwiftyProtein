@@ -1,4 +1,4 @@
-export default legands = [
+export const ligands = [
     '001',
     '011',
     '031',
@@ -1002,7 +1002,7 @@ export default legands = [
     'PRZ',
     'PS9',
     'PSU',
-    'PT,'
+    'PT',
     'PTE',
     'PTG',
     'PTH',
