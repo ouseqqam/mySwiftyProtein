@@ -45,12 +45,12 @@ export default function LigandsList() {
 
 const styles = StyleSheet.create({
     container: {
-        width: '90%',
+        width: '100%',
     },
     input: {
         height: 40,
         margin: 12,
-        borderWidth: 1,
+        // borderWidth: 1,
         padding: 10,
     },
 })
