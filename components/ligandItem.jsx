@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native' 
+import { View, Text, StyleSheet, TouchableOpacity  } from 'react-native' 
+
 
 export default function LigandItem(props) {
     return (
         <View style= {styles.container} >
-            <Text>{props.ligand}</Text>
+            <TouchableOpacity onPress={() => console.log(props.ligand)}>
+                <Text>{props.ligand}</Text>
+            </TouchableOpacity> 
         </View>
     )
 }
@@ -16,3 +19,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#d0d0ff',
     },
   })
+
+
+//   <TouchableWithoutFeedback onPress={() => console.log(props.ligand)}>
+//     Keyboard.dismiss()
+//     </TouchableWithoutFeedback>
