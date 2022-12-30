@@ -1,13 +1,12 @@
 import { StyleSheet, View, TextInput } from 'react-native'
 import LigandsList from './components/ligandsList'
+import Navigator from './routes/homeStack';
 
 
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <LigandsList />
-    </View>
+      <Navigator />
   );
 }
 

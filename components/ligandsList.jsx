@@ -4,7 +4,7 @@ import LigandItem from "./ligandItem.jsx";
 import SearchBar from "./searchBar.jsx";
 import { useState } from "react"
 
-export default function LigandsList() {
+export default function LigandsList({navigation}) {
     const [isArray, setArray] = useState(true)
     const [ligand, setLigand] = useState(ligands)
 
@@ -34,7 +34,7 @@ export default function LigandsList() {
                 isArray ? 
                 <FlatList
                     data={ligand}
-                    renderItem={({item}) => <LigandItem ligand = {item} />}
+                    renderItem={({item}) => <LigandItem ligand = {item} navigation={navigation}  />}
                     keyExtractor={item => item}
                 /> 
                 : <LigandItem ligand = {ligand} />
