@@ -1,14 +1,18 @@
-import { View, TextInput, StyleSheet, Button, Text } from "react-native"
+import { View, TextInput, StyleSheet, Button, Text, TouchableOpacity } from "react-native"
 import { useState } from "react"
+import { FontAwesome } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 export default function SearchBar(props) {
     const [search, setSearch] = useState(false)
     return (
-        <View>
+        <View style = {styles.container} >
             {
                 search ?
                     <View style={styles.cancel} >
-                    <Button title="Cancel" onPress={() => setSearch(!search)} />
+                    <TouchableOpacity onPress={() => setSearch(!search)}>
+                        <AntDesign name="arrowleft" size={24} color="black" />
+                    </TouchableOpacity>
                     <TextInput
                         style={styles.input}
                         placeholder="Search..."
@@ -17,8 +21,11 @@ export default function SearchBar(props) {
                     </View>
                 :
                     <View style = {styles.search} >
-                        <Text>Ligand list</Text>
-                        <Button title="Search" onPress={() => setSearch(!search)} />
+                        <Text style = {styles.text} >Ligand list</Text>
+                        {/* <Button style = {styles.btn} src onPress={() => setSearch(!search)} /> */}
+                        <TouchableOpacity onPress={() => setSearch(!search)}>
+                            <FontAwesome name="search" size={24} color="black" />
+                        </TouchableOpacity>
                     </View>
             }
         </View>
@@ -26,23 +33,36 @@ export default function SearchBar(props) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        
+    },
     input: {
         height: 40,
         margin: 12,
-        // borderWidth: 1,
+        borderWidth: 2,
+        border: 'solid',
+        width : '90%',
         padding: 10,
-        borderRadius: 10,
+        borderRadius: 20,
     },
     search: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        margin: 10,
+        marginVertical: 10,
+        marginHorizontal: 20,  
     },
     cancel: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         margin: 10,
+    },
+    text: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    btn: {
+        
     }
 })

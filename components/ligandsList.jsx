@@ -11,7 +11,6 @@ export default function LigandsList({navigation}) {
     const handleChange = (text) => {
         text = text.trim()
         const ligandsList = ligands.filter(ligand => ligand.startsWith(text))
-        console.log(ligandsList)
         if (ligandsList.length > 1) {
             setArray(true)
             setLigand(ligandsList)
@@ -46,6 +45,7 @@ export default function LigandsList({navigation}) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        marginTop: 30,
     },
     input: {
         height: 40,
