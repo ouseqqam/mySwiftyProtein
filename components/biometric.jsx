@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native'
+import { StyleSheet, View, Button } from 'react-native'
 import { useEffect, useState } from 'react'
 import * as LocalAuthentication from 'expo-local-authentication'
 import { Alert } from 'react-native'
@@ -16,13 +16,11 @@ export default function Biometric({navigation}) {
   const handleBiometricAuth = async () => {
     try {
       const savedBiometrics = await LocalAuthentication.isEnrolledAsync()
-      console.log(savedBiometrics)
       if (savedBiometrics)
       {
           const result = await LocalAuthentication.authenticateAsync({
             promptMessage: 'Authenticate',
           })
-          console.log(result)
           if (result.success) {
             navigation.navigate('LigandList')
           }

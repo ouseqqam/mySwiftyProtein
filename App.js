@@ -1,21 +1,23 @@
 import { StyleSheet, View, TextInput } from 'react-native'
-import Biometric from './components/biometric';
-import Navigator from './routes/homeStack';
+import Biometric from './components/biometric'
+import Data from './components/data'
+import Protein from './components/protein'
+import Navigator from './routes/homeStack'
 
 
 
 export default function App() {
   return (
-      <Navigator />
+   <Navigator />
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // paddingTop: 100,
-    // alignItems: 'center',
-    // fontWeight: 'bold',
-    // fontSize: 20,
+    flex: 1,
+    paddingTop: 100,
+    alignItems: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
 })

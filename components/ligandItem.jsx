@@ -4,7 +4,9 @@ import { View, Text, StyleSheet, TouchableOpacity  } from 'react-native'
 export default function LigandItem(props) {
     return (
         <View style= {styles.container} >
-            <TouchableOpacity onPress={() => props.navigation.navigate('liganDetails')}>
+            <TouchableOpacity onPress={() => props.navigation.navigate('liganDetails', {
+                ligand: props.ligand
+            })}>
                 <Text styles = {styles.text}>{props.ligand}</Text>
             </TouchableOpacity> 
         </View>
