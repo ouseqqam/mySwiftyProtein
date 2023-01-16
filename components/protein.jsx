@@ -10,7 +10,7 @@ import {
   Vector3,
 } from "three"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import OrbitControlsView from 'expo-three-orbit-controls'
 import ExpoTHREE, { Renderer } from "expo-three"
@@ -21,6 +21,13 @@ import colors from '../data/cpkColors.json'
 const Protein = (props) => {
     const { atoms, connects } = props
     const [camera, setCamera] = useState()
+    let timeout
+
+    useEffect(() => {
+      // Clear the animation loop when the component unmounts
+      return () => clearTimeout(timeout);
+    }, []);
+
     const onContextCreate = async (gl) => {
         const scene = new THREE.Scene()
 
@@ -37,19 +44,20 @@ const Protein = (props) => {
         // set camera position away from cube
         camera.position.z = 30
         // camera.position.y = 30
-        setCamera(camera)
         camera.lookAt(0,0,0)
-        // scene.add(camera)
+        setCamera(camera)
+        scene.add(camera)
     
         const renderer = new Renderer({ gl })
         // set size of buffer to be equal to drawing buffer width
         renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight)
         renderer.setClearColor(0x000000, 1.0)
 
-        const light = new THREE.DirectionalLight(0xffffff, 1.0)
-        light.position.y = 50
-        light.position.z= 50
-        scene.add(light)
+        // const light = new THREE.DirectionalLight(0xffffff, 1.0)
+        // light.position.y = 0
+        // light.position.z= 50
+        
+        // scene.add(light)
 
         
         let material = ''
@@ -62,17 +70,13 @@ const Protein = (props) => {
         if (element.length == 2)
           element = element[0] + element[1].toLowerCase()
         let color  = colors[element].jmol
-        material = new THREE.MeshStandardMaterial({
+        material = new THREE.MeshMatcapMaterial({
           color: `#${color}`,
         })
         let sphere = new Mesh(geometry, material)
         sphere.position.set(x, y, z)
         scene.add(sphere)
 
-      })
-
-      material = new THREE.MeshStandardMaterial({
-        color: 'white',
       })
 
       connects.forEach(connect => {
@@ -86,34 +90,34 @@ const Protein = (props) => {
           let geometry = new THREE.CylinderGeometry( 0.1, 0.1, distance, 32, 32)
           let cylinder = new Mesh(geometry, material)
           cylinder.position.set(x, y, z)
-          geometry.translate( 0, distance / 2, 0 )
+          geometry.translate( 0, distance / 2, 0)
           geometry.rotateX( Math.PI / 2 )
           cylinder.lookAt(a1) 
           scene.add(cylinder)  
         }
       })
+
+
         
       const render = () => {
-        // update();
+        timeout = requestAnimationFrame(render)
         renderer.render(scene, camera);
-  
-        // ref.current.getControls()?.update();
+
         gl.endFrameEXP();
       };
       render();
-      }
+    }
 
   return (
     <View>
       {
         atoms && connects &&
-        <OrbitControlsView style={{ flex: 1 }} camera= {camera}>
+        <OrbitControlsView camera= {camera}  >
           <GLView
             onContextCreate={onContextCreate}
             style={{ width: 400, height: 900 }}
           />
         </OrbitControlsView>
-
       }
     </View>
   )

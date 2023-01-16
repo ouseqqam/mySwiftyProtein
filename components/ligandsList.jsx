@@ -36,7 +36,7 @@ export default function LigandsList({navigation}) {
                     renderItem={({item}) => <LigandItem ligand = {item} navigation={navigation}  />}
                     keyExtractor={item => item}
                 /> 
-                : <LigandItem ligand = {ligand} />
+                : <LigandItem ligand = {ligand} navigation={navigation} />
             }
         </View>
     )
