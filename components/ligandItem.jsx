@@ -7,7 +7,7 @@ export default function LigandItem(props) {
             <TouchableOpacity onPress={() => props.navigation.navigate('liganDetails', {
                 ligand: props.ligand
             })}>
-                <Text styles = {styles.text}>{props.ligand}</Text>
+                <Text style = {styles.text}>{props.ligand}</Text>
             </TouchableOpacity> 
         </View>
     )
@@ -15,16 +15,20 @@ export default function LigandItem(props) {
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10,
-        padding: 15,
+        marginHorizontal: 30,
+        backgroundColor: '#19c2ea',
+        padding: 10,
+        borderColor: '#1A0000',
+        // borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: '#d0d0ff',
+        // backgroundColor: '#d0d0ff',
         marginTop: 20,
     },
     text: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
-        color: 'white',
+        // color: 'white',
+        textAlign: 'center'
     }
   })
 

@@ -44,13 +44,7 @@ export default function LigandsList({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        // width: '100%',
         marginTop: 30,
-    },
-    input: {
-        height: 40,
-        margin: 12,
-        // borderWidth: 1,
-        padding: 10,
     },
 })

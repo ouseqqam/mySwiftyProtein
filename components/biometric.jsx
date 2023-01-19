@@ -1,7 +1,8 @@
-import { StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, View, Button, Image, TouchableOpacity, Text } from 'react-native'
 import { useEffect, useState } from 'react'
 import * as LocalAuthentication from 'expo-local-authentication'
 import { Alert } from 'react-native'
+import  Logo from '../assets/Swifty.png'
 
 export default function Biometric({navigation}) {
   const [isBiometricSupported, setIsBiometricSupported] = useState(false)
@@ -37,9 +38,12 @@ export default function Biometric({navigation}) {
 
   return (
     <View style={styles.container}>
+      <Image source= {Logo} style = {styles.img} />
       {
         isBiometricSupported ?
-          <Button title="Authenticate" onPress={handleBiometricAuth} />
+        <TouchableOpacity style= {styles.btn} onPress= { handleBiometricAuth } >
+          <Text style = {styles.txt} >Authenticate</Text>
+        </TouchableOpacity>
         :
           null
       }
@@ -54,4 +58,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  img: {
+    width: 300,
+    height: 300
+  },
+  btn: {
+    backgroundColor: '#19c2ea',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 200,
+    height: 40,
+    // borderWidth: 1,
+    borderColor: '#1A0000',
+    borderRadius: 20
+  }, 
+  txt: {
+    color: '#1A0000',
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: 'white'
+  }
 });

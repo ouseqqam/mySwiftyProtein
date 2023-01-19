@@ -11,7 +11,7 @@ export default function SearchBar(props) {
                 search ?
                     <View style={styles.cancel} >
                     <TouchableOpacity onPress={() => setSearch(!search)}>
-                        <AntDesign name="arrowleft" size={24} color="black" />
+                        <AntDesign name="arrowleft" size={24} color="#1A0000" />
                     </TouchableOpacity>
                     <TextInput
                         style={styles.input}
@@ -24,7 +24,7 @@ export default function SearchBar(props) {
                         <Text style = {styles.text} >Ligand list</Text>
                         {/* <Button style = {styles.btn} src onPress={() => setSearch(!search)} /> */}
                         <TouchableOpacity onPress={() => setSearch(!search)}>
-                            <FontAwesome name="search" size={24} color="black" />
+                            <FontAwesome name="search" size={24} color="#1A0000" />
                         </TouchableOpacity>
                     </View>
             }
@@ -34,16 +34,17 @@ export default function SearchBar(props) {
 
 const styles = StyleSheet.create({
     container: {
-        
     },
     input: {
         height: 40,
         margin: 12,
         borderWidth: 2,
+        borderColor: '#1A0000',
         border: 'solid',
         width : '90%',
         padding: 10,
         borderRadius: 20,
+        color: '#1A0000'
     },
     search: {
         flexDirection: 'row',
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 24,
         fontWeight: 'bold',
+        // color: '#19c2ea'
     },
     btn: {
         

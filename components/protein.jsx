@@ -1,5 +1,4 @@
-import { View } from "react-native"
-import Expo from "expo";
+import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
 import {
   Scene,
   Mesh,
@@ -10,21 +9,24 @@ import {
   Vector3,
 } from "three"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-import OrbitControlsView from 'expo-three-orbit-controls'
-import ExpoTHREE, { Renderer } from "expo-three"
+import OrbitControlsView from '../orbitControls/OrbitControlsView'
+import { Renderer } from "expo-three"
 import { GLView } from "expo-gl"
 import colors from '../data/cpkColors.json'
+// import * as Sharing from 'expo-sharing'
+import ViewShot from "react-native-view-shot"
 
 
 const Protein = (props) => {
     const { atoms, connects } = props
     const [camera, setCamera] = useState()
+    const viewShot = useRef();
     let timeout
 
     useEffect(() => {
-      // Clear the animation loop when the component unmounts
+      // Clear the animation loop when the component unmountsr
       return () => clearTimeout(timeout);
     }, []);
 
@@ -42,8 +44,7 @@ const Protein = (props) => {
         }
     
         // set camera position away from cube
-        camera.position.z = 30
-        // camera.position.y = 30
+        camera.position.z = 60
         camera.lookAt(0,0,0)
         setCamera(camera)
         scene.add(camera)
@@ -51,7 +52,7 @@ const Protein = (props) => {
         const renderer = new Renderer({ gl })
         // set size of buffer to be equal to drawing buffer width
         renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight)
-        renderer.setClearColor(0x000000, 1.0)
+        // renderer.setClearColor(0x000000, 1.0)
 
         // const light = new THREE.DirectionalLight(0xffffff, 1.0)
         // light.position.y = 0
@@ -107,20 +108,50 @@ const Protein = (props) => {
       };
       render();
     }
+    const captureAndShareScreenshot = () => {
+        viewShot.current.capture().then((uri) => {
+        Sharing.shareAsync(uri)
+      }),
+      (error) => console.error("Oops, snapshot failed", error);
+      };
+
 
   return (
-    <View>
-      {
-        atoms && connects &&
-        <OrbitControlsView camera= {camera}  >
-          <GLView
-            onContextCreate={onContextCreate}
-            style={{ width: 400, height: 900 }}
-          />
-        </OrbitControlsView>
-      }
+    <View style= {styles.container}>
+      <TouchableOpacity onPress={captureAndShareScreenshot}>
+        <Text>Share</Text>
+      </TouchableOpacity>
+      <ViewShot
+      ref = {viewShot}
+      options={{ quality: 0.9, result:"base64" }}
+      >
+        <View>
+          {/* {
+            atoms && connects &&
+            <OrbitControlsView camera= {camera}  >
+              <GLView
+                onContextCreate={onContextCreate}
+                style = {styles.tst}
+              />
+            </OrbitControlsView>
+          } */}
+          <Text style= {styles.tst}>Hello</Text>
+        </View>
+      </ViewShot>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center'
+  },
+  tst: {
+
+  }
+})
 
 export default Protein

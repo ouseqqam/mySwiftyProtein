@@ -45,12 +45,11 @@ function LigandDetails({route}) {
 export default LigandDetails;
 
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingTop: 60,
-      alignItems: 'center',
-      fontWeight: 'bold',
-      fontSize: 20,
-    },
-  });
+// const styles = StyleSheet.create({
+//     container: {
+//       paddingTop: 60,
+//       alignItems: 'center',
+//       fontWeight: 'bold',
+//       fontSize: 20,
+//     },
+//   });
