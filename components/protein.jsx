@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
+import { TouchableOpacity, View, Text, StyleSheet, Alert, Modal } from "react-native"
 import {
   Scene,
   Mesh,
@@ -18,11 +18,16 @@ import colors from '../data/cpkColors.json'
 // import * as Sharing from 'expo-sharing'
 import ViewShot from "react-native-view-shot"
 
+const raycaster = new THREE.Raycaster()
 
 const Protein = (props) => {
+  const [modalVisible, setModalVisible] = useState(false)
     const { atoms, connects } = props
+    const [dimention, setDimention] = useState({})
+    const [touch, setTouch] = useState({})
     const [camera, setCamera] = useState()
     const viewShot = useRef();
+    const [spheres, setSpheres] = useState([])
     let timeout
 
     useEffect(() => {
@@ -44,21 +49,15 @@ const Protein = (props) => {
         }
     
         // set camera position away from cube
-        camera.position.z = 60
+        camera.position.z = 10
         camera.lookAt(0,0,0)
         setCamera(camera)
-        scene.add(camera)
+        // scene.add(camera)
     
         const renderer = new Renderer({ gl })
         // set size of buffer to be equal to drawing buffer width
         renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight)
-        // renderer.setClearColor(0x000000, 1.0)
-
-        // const light = new THREE.DirectionalLight(0xffffff, 1.0)
-        // light.position.y = 0
-        // light.position.z= 50
-        
-        // scene.add(light)
+        renderer.setClearColor(0x000000, 1.0)
 
         
         let material = ''
@@ -77,7 +76,7 @@ const Protein = (props) => {
         let sphere = new Mesh(geometry, material)
         sphere.position.set(x, y, z)
         scene.add(sphere)
-
+        setSpheres(prev => [...prev, sphere])
       })
 
       connects.forEach(connect => {
@@ -96,48 +95,76 @@ const Protein = (props) => {
           cylinder.lookAt(a1) 
           scene.add(cylinder)  
         }
-      })
-
-
-        
+      }) 
       const render = () => {
         timeout = requestAnimationFrame(render)
-        renderer.render(scene, camera);
-
+        renderer.render(scene, camera)
         gl.endFrameEXP();
       };
       render();
     }
-    const captureAndShareScreenshot = () => {
-        viewShot.current.capture().then((uri) => {
-        Sharing.shareAsync(uri)
-      }),
-      (error) => console.error("Oops, snapshot failed", error);
-      };
+    // const captureAndShareScreenshot = () => {
+    //     viewShot.current.capture().then((uri) => {
+    //     Sharing.shareAsync(uri)
+    //   }),
+    //   (error) => console.error("Oops, snapshot failed", error)
+    // };
 
+    // const pointer = new THREE.Vector2()
+    const getTouchPosition =  (e) => {
+      const {locationX, locationY} = e.nativeEvent
+      const x = (locationX / dimention.width) * 2 - 1
+      const y = - (locationY / dimention.height) * 2 + 1
+      const point = {x, y}
+      if (point && spheres) {
+        raycaster.setFromCamera( point, camera )
+        const intersects = raycaster.intersectObjects(spheres)
+        if (intersects.length > 0) {
+          for(let i = 0; i < atoms.length; i++) {
+            let {x, y, z} = atoms[i]
+            let a1 = new THREE.Vector3(x, y, z)
+            let distance = a1.distanceTo(camera.position)
+            if (parseInt(distance) == parseInt(intersects[0].distance)) {
+              Alert.alert("Information", "test")
+              break
+            }
+          }
+        }
+      }
+      setTouch({x, y})
+    }
+
+    const getOrbitDmention = (e) => {
+      const {height, width} = e.nativeEvent.layout
+      setDimention({height, width})
+    }
 
   return (
     <View style= {styles.container}>
-      <TouchableOpacity onPress={captureAndShareScreenshot}>
+      {/* <TouchableOpacity onPress={captureAndShareScreenshot}>
         <Text>Share</Text>
-      </TouchableOpacity>
-      <ViewShot
+      </TouchableOpacity> */}
+      {/* <ViewShot
       ref = {viewShot}
       options={{ quality: 0.9, result:"base64" }}
-      >
-        <View>
-          {/* {
+      > */}
+        <View style= {styles.container} >
+          {
             atoms && connects &&
-            <OrbitControlsView camera= {camera}  >
+            <OrbitControlsView
+              camera= {camera}
+              style= {styles.container}
+              onLayout = {getOrbitDmention}
+            >
               <GLView
                 onContextCreate={onContextCreate}
-                style = {styles.tst}
+                style= {styles.container}
+                onTouchEndCapture={getTouchPosition}
               />
             </OrbitControlsView>
-          } */}
-          <Text style= {styles.tst}>Hello</Text>
+          }
         </View>
-      </ViewShot>
+      {/* </ViewShot> */}
     </View>
   )
 }
@@ -145,12 +172,7 @@ const Protein = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center'
-  },
-  tst: {
-
+    justifyContent:'center'
   }
 })
 
