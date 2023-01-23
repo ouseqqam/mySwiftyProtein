@@ -23,6 +23,7 @@ const raycaster = new THREE.Raycaster()
 const Protein = (props) => {
   const [modalVisible, setModalVisible] = useState(false)
     const { atoms, connects } = props
+    const [cube, setCube] = useState(true)
     const [dimention, setDimention] = useState({})
     const [touch, setTouch] = useState({})
     const [camera, setCamera] = useState()
@@ -64,8 +65,11 @@ const Protein = (props) => {
 
       atoms.forEach(atom => {
         let {x, y, z} = atom
-        
-        let geometry = new THREE.SphereGeometry(0.3)
+        let geometry = ''
+        if (!cube)
+          geometry = new THREE.SphereGeometry(0.3)
+        else
+          geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
         let element = atom.element
         if (element.length == 2)
           element = element[0] + element[1].toLowerCase()
@@ -134,9 +138,6 @@ const Protein = (props) => {
 
   return (
     <View style= {styles.container}>
-      {/* <TouchableOpacity onPress={captureAndShareScreenshot}>
-        <Text>Share</Text>
-      </TouchableOpacity> */}
       {/* <ViewShot
       ref = {viewShot}
       options={{ quality: 0.9, result:"base64" }}
