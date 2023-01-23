@@ -75,6 +75,7 @@ const Protein = (props) => {
         })
         let sphere = new Mesh(geometry, material)
         sphere.position.set(x, y, z)
+        sphere.name = atom.element
         scene.add(sphere)
         setSpheres(prev => [...prev, sphere])
       })
@@ -120,15 +121,7 @@ const Protein = (props) => {
         raycaster.setFromCamera( point, camera )
         const intersects = raycaster.intersectObjects(spheres)
         if (intersects.length > 0) {
-          for(let i = 0; i < atoms.length; i++) {
-            let {x, y, z} = atoms[i]
-            let a1 = new THREE.Vector3(x, y, z)
-            let distance = a1.distanceTo(camera.position)
-            if (parseInt(distance) == parseInt(intersects[0].distance)) {
-              Alert.alert("Information", "test")
-              break
-            }
-          }
+          console.log(intersects[0].object.name)
         }
       }
       setTouch({x, y})
