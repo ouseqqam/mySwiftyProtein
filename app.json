@@ -4,7 +4,7 @@
     "slug": "swiftyProtein",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Swifty.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/Swifty.png",
