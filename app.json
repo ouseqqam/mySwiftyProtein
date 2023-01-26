@@ -4,10 +4,10 @@
     "slug": "swiftyProtein",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/blueColor.png",
+    "icon": "./assets/Swifty.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/blueColor.png",
+      "image": "./assets/Swifty.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +23,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/blueColor.png",
+        "foregroundImage": "./assets/Swifty.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.ouseqqam.swiftyProtein"

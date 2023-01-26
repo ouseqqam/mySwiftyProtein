@@ -5,7 +5,6 @@ import OrbitControlsView from '../orbitControls/OrbitControlsView'
 import { Renderer } from "expo-three"
 import { GLView } from "expo-gl"
 import colors from '../data/cpkColors.json'
-import * as Sharing from 'expo-sharing'
 import ViewShot from "react-native-view-shot"
 import Settings from "./settings"
 import Share from 'react-native-share';
@@ -54,7 +53,7 @@ const Protein = (props) => {
         renderer.setClearColor(0x000000, 1.0)
 
         
-        let material = ''
+      let material = ''
 
       atoms.forEach(atom => {
         let {x, y, z} = atom

@@ -13,7 +13,7 @@ export default function Navigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen name="Biometric" component={Biometric} options={{headerShown: false}} /> */}
+        <Stack.Screen name="Biometric" component={Biometric} options={{headerShown: false}} />
         <Stack.Screen name="LigandList" component={LigandsList} options={{headerShown: false}} />
         <Stack.Screen name="liganDetails" component={LigandDetails} />
       </Stack.Navigator>

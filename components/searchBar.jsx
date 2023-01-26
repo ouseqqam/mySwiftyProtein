@@ -22,7 +22,6 @@ export default function SearchBar(props) {
                 :
                     <View style = {styles.search} >
                         <Text style = {styles.text} >Ligand list</Text>
-                        {/* <Button style = {styles.btn} src onPress={() => setSearch(!search)} /> */}
                         <TouchableOpacity onPress={() => setSearch(!search)}>
                             <FontAwesome name="search" size={24} color="#1A0000" />
                         </TouchableOpacity>
